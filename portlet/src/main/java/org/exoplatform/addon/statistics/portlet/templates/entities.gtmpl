@@ -1,0 +1,23 @@
+#{param name=entityStatistics/}
+<table id="entitiesStatistics" class="table table-striped table-bordered" cellspacing="0" width="100%">
+        <thead>
+            <tr>
+                <th>Entity</th>
+                <th>Loads</th>
+                <th>Fetches</th>
+                <th>Optimistic Faults</th>
+                <th>Modifications</th>
+            </tr>
+        </thead>
+
+<%for (entity in entityStatistics) {%>
+         <tbody>
+                    <tr>
+                        <td rel="tooltip" data-placement="bottom" title=${entity}>${entity}</td>
+                        <td rel="tooltip" data-placement="bottom" title=${accessCount}>${accessCount}</td>
+
+                    </tr>
+         </tbody>
+ <%}%>
+
+</table>

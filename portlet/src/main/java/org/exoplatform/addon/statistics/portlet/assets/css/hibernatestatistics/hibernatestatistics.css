@@ -1,0 +1,20 @@
+#hibernateMonitor .navbar li {
+  list-style-type: none;
+}
+#hibernateMonitor ul {
+  margin: 0;
+}
+#hibernateMonitor .navbar {
+  margin: 0;
+}
+#hibernateMonitor .navbar-nav {
+  padding: 0;
+}
+
+#hibernateMonitor nav {
+  margin-top: 5px;
+}
+
+#hibernateMonitor .tab-content {
+  padding: 10px;
+}

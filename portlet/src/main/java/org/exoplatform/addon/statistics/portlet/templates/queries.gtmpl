@@ -1,0 +1,28 @@
+
+#{param name=queries/}
+<table id="queries" class="table table-striped table-bordered" cellspacing="0" width="100%">
+        <thead>
+            <tr>
+                <th>Query</th>
+                <th>Performance</th>
+                <th>Cached</th>
+                <th>Time in DB</th>
+                <th>Invocations</th>
+                <th>Fetched Rows</th>
+            </tr>
+        </thead>
+
+<%for (query in queries) {%>
+         <tbody>
+                    <tr>
+                        <td>${query}</td>
+                        <td>${Performance}</td>
+                        <td>${Cached}</td>
+                        <td>${DBTime}</td>
+                        <td>${Invocations}</td>
+                        <td>${RowsFetched}</td>
+                    </tr>
+                </tbody>
+ <%}%>
+
+    </table>

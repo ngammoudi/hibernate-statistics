@@ -1,0 +1,29 @@
+#{param name=collectionsStatistics/}
+<table id="collectionStatistics" class="table table-striped table-bordered" cellspacing="0" width="100%">
+        <thead>
+            <tr>
+                <th>Collection Role Name</th>
+                <th>Performance</th>
+                <th>Access Count</th>
+                <th>Loads</th>
+                <th>Fetches</th>
+                <th>Recreations</th>
+                <th>Modifications</th>
+            </tr>
+        </thead>
+
+<%for (collection in collectionsStatistics) {%>
+         <tbody>
+                    <tr>
+                        <td rel="tooltip" data-placement="bottom" title=${collection}>${collection}</td>
+                        <td rel="tooltip" data-placement="bottom" title=${CollectionPerformance}>${CollectionPerformance}</td>
+                        <td rel="tooltip" data-placement="bottom" title=${AccessCount}>${AccessCount}</td>
+                        <td rel="tooltip" data-placement="bottom" title=${LoadsCount}>${LoadsCount}</td>
+                        <td rel="tooltip" data-placement="bottom" title=${FetchesCount}>${FetchesCount}</td>
+                        <td rel="tooltip" data-placement="bottom" title=${RecreationCount}>${RecreationCount}</td>
+                        <td rel="tooltip" data-placement="bottom" title=${ModificationCount}>${ModificationCount}</td>
+                    </tr>
+         </tbody>
+ <%}%>
+
+</table>
