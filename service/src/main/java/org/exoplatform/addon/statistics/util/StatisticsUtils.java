@@ -37,4 +37,10 @@ public class StatisticsUtils {
        return p;
 
     }
+    public static double ModificationsTableCell (long maxModificationCount, long inserts, long updates, long deletes){
+        long modificationCount = inserts + updates + deletes;
+        return Math.max(0, (double) modificationCount / (double) maxModificationCount);
+    }
+
+
 }
