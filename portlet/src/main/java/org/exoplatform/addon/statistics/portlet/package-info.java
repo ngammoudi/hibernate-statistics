@@ -1,15 +1,14 @@
 @Portlet
 @Application(name = "HibernateStatistics")
 @Bindings({@Binding(HibernateStatisticsService.class)})
-@Scripts({ @Script(id = "jquery", value = "js/jquery/jquery-1.12.3.js",location = AssetLocation.APPLICATION),
-        @Script(id = "juzu", value = "js/common/juzuFunctions.js",location = AssetLocation.APPLICATION),
-        @Script(id = "jquery.dataTables-js", value = "js/datatable/jquery.dataTables.min.js", location = AssetLocation.APPLICATION),
-        @Script(id = "datatable-js", value = "js/datatable/dataTables.bootstrap.min.js", location = AssetLocation.APPLICATION,depends = {"jquery","jquery.dataTables-js"}),
-
-           @Script(id = "hibernate-statistics-js", value = "js/hibernatestatistics/hibernatestatistics.js", location = AssetLocation.APPLICATION,depends = {"jquery","datatable-js"})
+@Scripts({
+        @Script(id = "jquery-dataTables-js", value = "js/datatable/jquery.dataTables.min.js"),
+        @Script(id = "datatable-js", value = "js/datatable/dataTables.bootstrap.min.js",depends = {"jquery-dataTables-js"}),
+        @Script(id = "hibernate-statistics-js", value = "js/hibernatestatistics/hibernatestatistics.js",depends = {"datatable-js"})
            })
-@Stylesheets({ @Stylesheet(id = "datatable-css", value = "css/datatable/dataTables.bootstrap.min.css",location = AssetLocation.APPLICATION),
-               @Stylesheet(id = "hibernate-statistics-css", value = "css/hibernatestatistics/hibernatestatistics.css",location = AssetLocation.APPLICATION)})
+@Stylesheets({ @Stylesheet(id = "datatable-css", value = "css/datatable/dataTables.bootstrap.min.css"),
+        @Stylesheet(id = "bootstrap-css", value = "css/datatable/bootstrap.min.css"),
+               @Stylesheet(id = "hibernate-statistics-css", value = "css/hibernatestatistics/hibernatestatistics.css")})
 @Assets("*")
 package org.exoplatform.addon.statistics.portlet;
 

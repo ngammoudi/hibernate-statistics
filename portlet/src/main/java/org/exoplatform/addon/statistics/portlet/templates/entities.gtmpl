@@ -3,6 +3,8 @@
         <thead>
             <tr>
                 <th>Entity</th>
+                <th>Performance</th>
+                <th>Access Count</th>
                 <th>Loads</th>
                 <th>Fetches</th>
                 <th>Optimistic Faults</th>
@@ -10,12 +12,16 @@
             </tr>
         </thead>
 
-<%for (entity in entityStatistics) {%>
+<%for (entity in entitiesStatistics) {%>
          <tbody>
                     <tr>
-                        <td rel="tooltip" data-placement="bottom" title=${entity}>${entity}</td>
-                        <td rel="tooltip" data-placement="bottom" title=${accessCount}>${accessCount}</td>
-
+                        <td>${entity}</td>
+                        <td>${EntityPerformance}%</td>
+                        <td>${EntityAccessCount}</td>
+                        <td>${EntityLoadsCount}</td>
+                        <td>${EntityFetchesCount}</td>
+                        <td>${EntityOptimisticFailureCount}</td>
+                        <td>${EntityModificationCount}</td>
                     </tr>
          </tbody>
  <%}%>

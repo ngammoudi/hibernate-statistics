@@ -1,4 +1,3 @@
-
 #{param name=queries/}
 <table id="queries" class="table table-striped table-bordered" cellspacing="0" width="100%">
         <thead>
@@ -25,4 +24,4 @@
                 </tbody>
  <%}%>
 
-    </table>
+</table>

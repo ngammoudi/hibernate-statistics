@@ -74,7 +74,7 @@ public class HibernateStatisticsController {
 
         parameters.put("queries" , queries);
         loadCollectionsStatistics(parameters, hibernateStatistics);
-        //loadEntitiesStatistics(parameters, hibernateStatistics);
+        loadEntitiesStatistics(parameters, hibernateStatistics);
         return index.with(parameters).ok();
 
 
@@ -83,48 +83,44 @@ public class HibernateStatisticsController {
     private void loadCollectionsStatistics(Map<String, Object> parameters, SessionFactoryImplementor hibernateStatistics) {
         String [] collectionsStatistics = hibernateStatistics.getStatistics().getCollectionRoleNames();
         for (String collection : collectionsStatistics) {
-
             CollectionStatistics collectionStatistics = hibernateStatistics.getStatistics().getCollectionStatistics(collection);
-if (collectionStatistics.getLoadCount() + hibernateStatistics.getStatistics().getSecondLevelCacheHitCount() == 0)
-    parameters.put("CollectionPerformance","n/a");
-            else if (collectionStatistics.getLoadCount() + collectionStatistics.getFetchCount() + hibernateStatistics.getStatistics().getSecondLevelCacheHitCount()==0){
-    parameters.put("CollectionPerformance",0);
+            Long cacheHits=hibernateStatistics.getStatistics().getSecondLevelCacheHitCount();
+            if (collectionStatistics.getLoadCount() + cacheHits == 0)
+                 parameters.put("CollectionPerformance","n/a");
+            else if (collectionStatistics.getLoadCount() + collectionStatistics.getFetchCount() + cacheHits==0){
+                 parameters.put("CollectionPerformance",0);
             }
             else{
-    parameters.put("CollectionPerformance",(Math.max(0, (collectionStatistics.getLoadCount() + hibernateStatistics.getStatistics().getSecondLevelCacheHitCount()) - (collectionStatistics.getRemoveCount() + collectionStatistics.getRecreateCount() + collectionStatistics.getUpdateCount())))/collectionStatistics.getLoadCount() + collectionStatistics.getFetchCount() + hibernateStatistics.getStatistics().getSecondLevelCacheHitCount());
+                 parameters.put("CollectionPerformance",(Math.max(0, (collectionStatistics.getLoadCount() + cacheHits) - (collectionStatistics.getRemoveCount() + collectionStatistics.getRecreateCount() + collectionStatistics.getUpdateCount())))/collectionStatistics.getLoadCount() + collectionStatistics.getFetchCount() + cacheHits);
             }
-           // parameters.put("AccessCount", new EntityPerformanceTableCell(collectionStatistics, hibernateStatistics.getStatistics().getQueryCacheHitCount()));
-            parameters.put("AccessCount", collectionStatistics.getFetchCount()+collectionStatistics.getLoadCount());
-            parameters.put("LoadsCount", collectionStatistics.getLoadCount());
-            parameters.put("FetchesCount", collectionStatistics.getFetchCount());
-            parameters.put("RecreationCount", collectionStatistics.getRecreateCount());
-            parameters.put("ModificationCount", collectionStatistics.getRecreateCount() + collectionStatistics.getRemoveCount() + collectionStatistics.getUpdateCount());
+                parameters.put("CollectionAccessCount", collectionStatistics.getFetchCount()+collectionStatistics.getLoadCount()+cacheHits);
+                parameters.put("CollectionLoadsCount", collectionStatistics.getLoadCount());
+                parameters.put("CollectionFetchesCount", collectionStatistics.getFetchCount());
+                parameters.put("CollectionRecreationCount", collectionStatistics.getRecreateCount());
+                parameters.put("CollectionModificationCount", collectionStatistics.getRecreateCount()+collectionStatistics.getUpdateCount()+collectionStatistics.getRemoveCount());
         }
-        parameters.put("collectionsStatistics" , collectionsStatistics);
+                parameters.put("collectionsStatistics" , collectionsStatistics);
     }
 
-@Ajax
-@Resource
-    public Response.Content loadEntitiesStatistics() throws JSONException {
-    JSONObject jsonObject = new JSONObject();
-
-    SessionFactoryImplementor hibernateStatistics = hibernateStatisticsService.generateStatistics();
-    String [] entitiesStatistics = hibernateStatistics.getStatistics().getEntityNames();
-
-     try {
-         for (String entity : entitiesStatistics) {
-             EntityStatistics entityStatistics= hibernateStatistics.getStatistics().getEntityStatistics(entity);
-
-             jsonObject.put("entityStatistics",entityStatistics);
-
-         }
-
-         }
-     catch (JSONException e) {
-        e.printStackTrace();
-    }
-    return Response.ok(jsonObject.toString()).withMimeType("application/json; charset=UTF-8").withHeader("Cache-Control", "no-cache");
-
-    }
-
+   private void loadEntitiesStatistics(Map<String, Object> parameters, SessionFactoryImplementor hibernateStatistics) {
+       String[] entitiesStatistics = hibernateStatistics.getStatistics().getEntityNames();
+           for (String entity : entitiesStatistics) {
+               EntityStatistics entityStatistics = hibernateStatistics.getStatistics().getEntityStatistics(entity);
+               Long cacheHits=hibernateStatistics.getStatistics().getSecondLevelCacheHitCount();
+               if (entityStatistics.getLoadCount()+cacheHits == 0)
+                   parameters.put("EntityPerformance","n/a");
+               else if (entityStatistics.getLoadCount() + entityStatistics.getFetchCount() + cacheHits==0){
+                   parameters.put("EntityPerformance",0);
+               }
+               else{
+                   parameters.put("EntityPerformance",(Math.max(0, (entityStatistics.getLoadCount() + cacheHits) - (entityStatistics.getDeleteCount() + entityStatistics.getInsertCount() + entityStatistics.getUpdateCount())))/entityStatistics.getLoadCount() + entityStatistics.getFetchCount() + cacheHits);
+               }
+               parameters.put("EntityAccessCount", entityStatistics.getFetchCount()+entityStatistics.getLoadCount()+cacheHits);
+               parameters.put("EntityLoadsCount", entityStatistics.getLoadCount());
+               parameters.put("EntityFetchesCount", entityStatistics.getFetchCount());
+               parameters.put("EntityOptimisticFailureCount", entityStatistics.getOptimisticFailureCount());
+               parameters.put("EntityModificationCount", entityStatistics.getInsertCount()+entityStatistics.getUpdateCount()+entityStatistics.getDeleteCount());
+       }
+       parameters.put("entitiesStatistics",entitiesStatistics);
+   }
 }

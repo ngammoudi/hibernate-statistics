@@ -15,15 +15,14 @@
 <%for (collection in collectionsStatistics) {%>
          <tbody>
                     <tr>
-                        <td rel="tooltip" data-placement="bottom" title=${collection}>${collection}</td>
-                        <td rel="tooltip" data-placement="bottom" title=${CollectionPerformance}>${CollectionPerformance}</td>
-                        <td rel="tooltip" data-placement="bottom" title=${AccessCount}>${AccessCount}</td>
-                        <td rel="tooltip" data-placement="bottom" title=${LoadsCount}>${LoadsCount}</td>
-                        <td rel="tooltip" data-placement="bottom" title=${FetchesCount}>${FetchesCount}</td>
-                        <td rel="tooltip" data-placement="bottom" title=${RecreationCount}>${RecreationCount}</td>
-                        <td rel="tooltip" data-placement="bottom" title=${ModificationCount}>${ModificationCount}</td>
+                        <td>${collection}</td>
+                        <td>${CollectionPerformance}</td>
+                        <td>${CollectionAccessCount}</td>
+                        <td>${CollectionLoadsCount}</td>
+                        <td>${CollectionFetchesCount}</td>
+                        <td>${CollectionRecreationCount}</td>
+                        <td>${CollectionModificationCount}</td>
                     </tr>
          </tbody>
  <%}%>
-
 </table>
